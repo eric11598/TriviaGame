@@ -2,38 +2,163 @@ $(document).ready(function() {
 
     var question0 =
     {
-      question: "ryu",
-      answer0: "answer1",
-      answer1: "answer2",
-      answer2: "answer3",
-      answer3: "answer4",
+      question: "QUESTION0?",
+      answerArray: ["WRONG", "WRONG", "RIGHT", "WRONG"],
+      correctAnswer: 2,
       image: 5,
     }
     
     var question1 =
     {
-      name: "ken",
-      answer0: "answer1",
-      answer1: "answer2",
-      answer2: "answer3",
-      answer3: "answer4",
+      name: "QUESTION1?",
+      answerArray: ["WRONG", "WRONG", "WRONG", "RIGHT"],
+      correctAnswer: 3 ,
       image: 5,
     }
      
 
 console.log("READY");
 
-var time = 8;
 
-intervalId = setInterval(count, 1000);
+questionArray = [question0, question1]
+answerArray = ["#answerZero","#answerOne","#answerTwo","#answerThree"]
+
+
+var time = 8;
+var questionPhase = true;
+var activeQuestion = questionArray[0];
+var answerCorrect = 0;
+var answerWrong = 0;
+var unanswered = 0;
+
+$("#timerContainer").hide();
+$("#questionContainer" ).hide();
+$("#playGame").on("click", playGame);
+
+
+
+
+
+
+function playGame()
+{
+
+  
+  time = 8;
+  activeQuestion = questionArray[0];
+
+  $("#startContainer").hide();
+  $("#timerContainer").show();
+  $("#questionContainer").show();
+
+  reWrite();
+  intervalId = setInterval(count, 1000);
+  checkGame();
+  
+}
+
+
 
 function count() {
-
    time--;
    var converted = timeConverter(time);
    $("#timer").text(converted);
 
+   if (questionPhase && time===0)
+   {
+      console.log("unanswered++");
+      $("#questionContainer").hide();
+      $("#timerText").text("YOU RAN OUT OF TIME");
+      questionPhase = false;
+      unanswered++;
+      time = 5;
+ 
+   }
+
+  
+   else if(!questionPhase && time ===0)
+   {
+    $("#timerText").text("TIME REMAINING");
+     time = 5;
+     questionPhase = true;
+     clearInterval(intervalId);
+     playGame();
+   }
+   
+
  }
+
+ 
+
+
+function reWrite()
+{
+
+
+  $("#question").text(activeQuestion.question);
+
+  for(var i = 0; i < answerArray.length; i++)
+  {
+    $(answerArray[i]).text(activeQuestion.answerArray[i]);
+    $(answerArray[i]).bind('click', {param: i}, checkAnswer);
+    
+  }
+
+    
+}
+
+function checkAnswer(event)
+{
+  console.log("YOU ARE HERE FGT");
+  
+ if (event.data.param === activeQuestion.correctAnswer)
+    {
+      $("#questionContainer").hide();
+      $("#timerText").text("YOU GOT IT RIGHT!");
+      answerCorrect+=1;
+      questionPhase = false;
+      time = 5;
+    }
+
+  else
+    {
+      $("#questionContainer").hide();
+      $("#timerText").text("YOU GOT IT WRONG!");
+      answerWrong+=1;
+      questionPhase = false;
+      time = 5;
+    }
+
+    checkAnswer=function(){}
+}
+
+
+function checkGame()
+{
+  console.log(answerCorrect+answerWrong+unanswered+ "=="+questionArray.length);
+
+  if(answerCorrect+answerWrong+unanswered === questionArray.length)
+    {
+      time = 0;
+      clearInterval(intervalId);
+      $("#questionContainer").hide();
+      console.log("QUE PASTA");
+      $("#startContainer").show();
+      
+      
+
+      $("#startText").text("GAME OVER! Results!")
+      $("#startText").append("RIGHT: "+answerCorrect+ " WRONG: "+answerWrong+" UNANSWERED: "+unanswered);
+      
+      answerCorrect = 0;
+      answerWrong = 0;
+      unanswered = 0;
+    
+    }
+}
+
+
+
 
 function timeConverter(t) {
 

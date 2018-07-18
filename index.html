@@ -13,23 +13,32 @@
   
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Fluid jumbotron</h1>
+            <h1 class="display-4">Fluid jumbotron!!</h1>
             <p class="lead">Trivia Game!</p>
             </div>
     </div>
 
     <div class="container">
             <div class="row">
-                    <div class="col-md-12" id="timerContainer">
-                            <h2>Time Remaining</h2>
+                <div class="col-md-12" id="startContainer">   
+                        <div id = "startText"> Welcome to Game! Click below to start!</div>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id = "playGame">Play Game!</button>
+                </div>
+
+
+
+                <div class="col-md-12" id="timerContainer">
+                            <div id="timerText">Time Remaining</div>
                             <div id="timer" style = "position: relative">--:--</div>
-                    </div>
-                    <div class="col-md-12" id="question">QUESTION</div>
+                </div>
+                
+                    <div class="col-md-12" id="questionContainer">
+                        <div id = "question">HELLO!</div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" id = "answerZero">Block level button</button>
                     <button type="button" class="btn btn-primary btn-lg btn-block" id = "answerOne">Block level button</button>
                     <button type="button" class="btn btn-primary btn-lg btn-block" id = "answerTwo">Block level button</button>
                     <button type="button" class="btn btn-primary btn-lg btn-block" id = "answerThree">Block level button</button>
-                    <button type="button" class="btn btn-primary btn-lg btn-block" id = "answerFour">Block level button</button>
-
+                </div>
             
                     
                     
