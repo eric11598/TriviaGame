@@ -2,19 +2,49 @@ $(document).ready(function() {
 
     var question0 =
     {
-      question: "QUESTION0?",
-      answerArray: ["WRONG", "WRONG", "RIGHT", "WRONG"],
+      question: "Which player has scored the most goals in a world cup?",
+      answerArray: ["Cristiano Ronaldo", "Pele", "Miroslav Klose", "Lionel Messi"],
       correctAnswer: 2,
-      image: 5,
+      image: "Klose",
     }
     
     var question1 =
     {
-      name: "QUESTION1?",
-      answerArray: ["WRONG", "WRONG", "WRONG", "RIGHT"],
+      question: "Who is the only player to have won the World Cup 3 times?",
+      answerArray: ["Neymar", "Ronaldo", "Diego Maradona", "Pele"],
+      correctAnswer: 3 ,
+      image: "Pele brazil",
+    }
+    var question2 =
+    {
+      question: "Which country has won the most World Cups?",
+      answerArray: ["Brazil", "Spain", "Argentina", "Germany"],
+      correctAnswer: 0 ,
+      image: "Brazil soccer",
+    }
+    var question3 =
+    {
+      question: "Which country hosted the first World Cup?",
+      answerArray: ["Brazil", "Uruguay", "Germany", "USA"],
+      correctAnswer: 1,
+      image: "uruguay soccer",
+    }
+
+    /*
+    var question1 =
+    {
+      name: "Who is the only player to have won the World Cup 3 times?",
+      answerArray: ["Neymar", "Ronaldo", "Diego Maradona", "Pele"],
       correctAnswer: 3 ,
       image: 5,
     }
+    var question1 =
+    {
+      name: "Who is the only player to have won the World Cup 3 times?",
+      answerArray: ["Neymar", "Ronaldo", "Diego Maradona", "Pele"],
+      correctAnswer: 3 ,
+      image: 5,
+    }*/
 
     var apikey = "AaROGpXAVa6N2SXY303PGYqP8HOkMNmo";
 
@@ -49,18 +79,23 @@ $(document).ready(function() {
       httpGetAsync('http://api.giphy.com/v1/gifs/search?' + params, function(data) {
         var gifs = JSON.parse(data);
         var firstgif = gifs.data[0].images.fixed_width.url;
-        $("#image").html("<img src='" + firstgif + "'>");
+        //$("#image").html("<img src='" + firstgif + "'>");
+        $('#timerText').append($('<img>',{id:'gif',src: firstgif}));
+        
+       
         console.log(gifs.data);
-
+       
         
 
       });
+
+      
   }
 
 console.log("READY");
 
 
-questionArray = [question0, question1]
+questionArray = [question0, question1, question2, question3]
 answerArray = ["#answerZero","#answerOne","#answerTwo","#answerThree"]
 
 
@@ -70,6 +105,7 @@ var activeQuestion = questionArray[0];
 var answerCorrect = 0;
 var answerWrong = 0;
 var unanswered = 0;
+var questionCount = -1
 
 $("#timerContainer").hide();
 $("#questionContainer" ).hide();
@@ -84,8 +120,14 @@ function playGame()
 {
 
   
+
+  questionCount+=1;
+  checkGame();
+
   time = 8;
-  activeQuestion = questionArray[0];
+  activeQuestion = questionArray[questionCount];
+
+
 
   $("#startContainer").hide();
   $("#timerContainer").show();
@@ -93,7 +135,7 @@ function playGame()
 
   reWrite();
   intervalId = setInterval(count, 1000);
-  checkGame();
+  
   
 }
 
@@ -135,6 +177,7 @@ function reWrite()
 {
 
 
+
   $("#question").text(activeQuestion.question);
 
   for(var i = 0; i < answerArray.length; i++)
@@ -149,17 +192,13 @@ function reWrite()
 
 function checkAnswer(event)
 {
-  console.log("YOU ARE HERE FGT");
+
   
  if (event.data.param === activeQuestion.correctAnswer)
     {
       $("#questionContainer").hide();
       $("#timerText").text("YOU GOT IT RIGHT!");
-      getGif("deadpool");
-
-
-
-
+      getGif(activeQuestion.image);
       answerCorrect+=1;
       questionPhase = false;
       time = 5;
@@ -180,14 +219,13 @@ function checkAnswer(event)
 
 function checkGame()
 {
-  console.log(answerCorrect+answerWrong+unanswered+ "=="+questionArray.length);
+  console.log(answerCorrect+answerWrong+unanswered+"=="+questionArray.length);
 
   if(answerCorrect+answerWrong+unanswered === questionArray.length)
     {
       time = 0;
       clearInterval(intervalId);
       $("#questionContainer").hide();
-      console.log("QUE PASTA");
       $("#startContainer").show();
       
       
