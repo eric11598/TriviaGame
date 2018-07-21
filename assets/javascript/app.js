@@ -78,21 +78,17 @@ $(document).ready(function() {
   
       httpGetAsync('http://api.giphy.com/v1/gifs/search?' + params, function(data) {
         var gifs = JSON.parse(data);
-        var firstgif = gifs.data[0].images.fixed_width.url;
-        //$("#image").html("<img src='" + firstgif + "'>");
-        $('#timerText').append($('<img>',{id:'gif',src: firstgif}));
         
-       
-        console.log(gifs.data);
-       
-        
+
+        var random = Math.floor(Math.random() * 24) + 1  
+        var targetgif = gifs.data[random].images.fixed_width.url;
+        $('#timerText').append($("<br>"));
+        $('#timerText').append($('<img>',{id:'gif',src: targetgif}));
 
       });
 
       
   }
-
-console.log("READY");
 
 
 questionArray = [question0, question1, question2, question3]
@@ -122,8 +118,9 @@ function playGame()
   
 
   questionCount+=1;
-  checkGame();
-
+  if(!checkGame())
+  {
+  $("#timer").text("08")
   time = 8;
   activeQuestion = questionArray[questionCount];
 
@@ -139,6 +136,7 @@ function playGame()
   
 }
 
+}
 
 
 function count() {
@@ -150,7 +148,8 @@ function count() {
    {
       console.log("unanswered++");
       $("#questionContainer").hide();
-      $("#timerText").text("YOU RAN OUT OF TIME");
+      $("#timerText").text("You ran out of time! The correct answer was: "+activeQuestion.answerArray[activeQuestion.correctAnswer]);
+      getGif(activeQuestion.image);
       questionPhase = false;
       unanswered++;
       time = 5;
@@ -160,7 +159,8 @@ function count() {
   
    else if(!questionPhase && time ===0)
    {
-    $("#timerText").text("TIME REMAINING");
+    $("#timerText").text("Time Remaining:");
+    $("#timer").text("05");
      time = 5;
      questionPhase = true;
      clearInterval(intervalId);
@@ -197,19 +197,22 @@ function checkAnswer(event)
  if (event.data.param === activeQuestion.correctAnswer)
     {
       $("#questionContainer").hide();
-      $("#timerText").text("YOU GOT IT RIGHT!");
+      $("#timerText").text("You got it right!");
       getGif(activeQuestion.image);
       answerCorrect+=1;
       questionPhase = false;
+      $("#timer").text("05");
       time = 5;
     }
 
   else
     {
       $("#questionContainer").hide();
-      $("#timerText").text("YOU GOT IT WRONG!");
+      $("#timerText").text("Wrong Answer! The correct answer was: "+activeQuestion.answerArray[activeQuestion.correctAnswer]);
+      getGif(activeQuestion.image);
       answerWrong+=1;
       questionPhase = false;
+      $("#timer").text("05");
       time = 5;
     }
 
@@ -231,13 +234,19 @@ function checkGame()
       
 
       $("#startText").text("GAME OVER! Results!")
+      $("#startText").append("<br>");
       $("#startText").append("RIGHT: "+answerCorrect+ " WRONG: "+answerWrong+" UNANSWERED: "+unanswered);
       
       answerCorrect = 0;
       answerWrong = 0;
-      unanswered = 0;
+      unanswered = 0; bv  
+      questionCount = -1
+
+      return true;
     
     }
+
+    return false;
 }
 
 
@@ -259,7 +268,7 @@ function timeConverter(t) {
       minutes = "0" + minutes;
     }
 
-    return minutes + ":" + seconds;
+    return seconds;
   }
 
 
