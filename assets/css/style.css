@@ -1,0 +1,12 @@
+body {
+    
+    background-image: url("..//images/background.jpg");
+    /*background-size: 100% 100%;*/
+    
+}
+
+#containerBody {
+    background: white;
+    padding: 20px;
+   
+}

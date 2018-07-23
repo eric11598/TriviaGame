@@ -13,15 +13,15 @@
   
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">World Cup Quiz Game!</h1>
-            <p class="lead">Test your world cup knowledge</p>
+            <h1 class="display-4" style = "text-align: center">World Cup Quiz Game!</h1>
+            <p class="lead" style = "text-align: center">Test your world cup knowledge</p>
             </div>
     </div>
 
-    <div class="container">
+    <div class="container" id = "containerBody">
             <div class="row">
                 <div class="col-md-12" id="startContainer">   
-                        <div id = "startText"> Welcome to Game! Click below to start!</div>
+                        <div id = "startText"> <h2>Welcome to Game! Click below to start!</h2></div>
                         <button type="button" class="btn btn-primary btn-lg btn-block" id = "playGame">Play Game!</button>
                         <div id="image"></div>
                     </div>
@@ -30,12 +30,12 @@
 
                 <div class="col-md-12" id="timerContainer">
                             <div id="timerText">Time Remaining</div>
-                            <div id="timer" style = "position: relative">--:--</div>
+                            <div id="timer" style = "position: relative;">--:--</div>
                             
                 </div>
                 
                     <div class="col-md-12" id="questionContainer">
-                        <div id = "question">HELLO!</div>
+                        <div id = "question"></div>
                     <button type="button" class="btn btn-primary btn-lg btn-block" id = "answerZero">Block level button</button>
                     <button type="button" class="btn btn-primary btn-lg btn-block" id = "answerOne">Block level button</button>
                     <button type="button" class="btn btn-primary btn-lg btn-block" id = "answerTwo">Block level button</button>

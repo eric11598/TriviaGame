@@ -30,21 +30,57 @@ $(document).ready(function() {
       image: "uruguay soccer",
     }
 
-    /*
-    var question1 =
+    
+    var question4 =
     {
-      name: "Who is the only player to have won the World Cup 3 times?",
-      answerArray: ["Neymar", "Ronaldo", "Diego Maradona", "Pele"],
+      question: "Who is the smallest population wise country to ever qualify for a World Cup?",
+      answerArray: ["Ireland", "Peru", "Bolivia", "Iceland"],
       correctAnswer: 3 ,
-      image: 5,
+      image: "iceland soccer",
     }
-    var question1 =
+    var question5 =
     {
-      name: "Who is the only player to have won the World Cup 3 times?",
-      answerArray: ["Neymar", "Ronaldo", "Diego Maradona", "Pele"],
-      correctAnswer: 3 ,
-      image: 5,
-    }*/
+      question: "Which one of these players have won the world up as both a coach and a player?",
+      answerArray: ["Zinedine Zidane", "Didier Deschamps", "Diego Maradona", "Jurgen Klinsmann"],
+      correctAnswer: 1,
+      image: "deschamps soccer",
+    }
+    var question6 =
+    {
+      question: "Which one of these host countries is the only host to every be eliminated in the group stage?",
+      answerArray: ["USA", "France", "Brazil", "South Africa"],
+      correctAnswer: 3,
+      image: "south africa soccer",
+    }
+    var question7 =
+    {
+      question: "This country holds the record for the most goals scored in 1 match with 10 goals",
+      answerArray: ["Brazil", "Hungary", "Germany", "Uruguay"],
+      correctAnswer: 1,
+      image: "Hungary Soccer",
+    }
+
+    var question8 =
+    {
+      question: "Who was famously sent off for a headbutt on Marco Materazzi in the 2006 World Cup Final?",
+      answerArray: ["Zinedine Zidane", "Cristiano Ronaldo", "Diego Forlan", "Carles Puyol"],
+      correctAnswer: 0,
+      image: "zidane headbutt",
+    }
+    var question9 =
+    {
+      question: "Who bit Italian defender Chiellini in the 2014 World Cup?",
+      answerArray: ["Messi", "Luis Suarez", "Diego Godin", "Neymar"],
+      correctAnswer: 1,
+      image: "luis suarez",
+    }
+    var question10 =
+    {
+      question: "Which country suffered the worst host defeat in history by losing to Germany 7-1?",
+      answerArray: ["USA", "South Africa", "France", "Brazil"],
+      correctAnswer: 3,
+      image: "Brazil soccer",
+    }
 
     var apikey = "AaROGpXAVa6N2SXY303PGYqP8HOkMNmo";
 
@@ -91,7 +127,7 @@ $(document).ready(function() {
   }
 
 
-questionArray = [question0, question1, question2, question3]
+questionArray = [question0,question1,question2,question3,question4,question5,question6,question7,question8,question9,question10];
 answerArray = ["#answerZero","#answerOne","#answerTwo","#answerThree"]
 
 
@@ -148,7 +184,7 @@ function count() {
    {
       console.log("unanswered++");
       $("#questionContainer").hide();
-      $("#timerText").text("You ran out of time! The correct answer was: "+activeQuestion.answerArray[activeQuestion.correctAnswer]);
+      $("#timerText").html("<h2>You ran out of time! The correct answer was: "+activeQuestion.answerArray[activeQuestion.correctAnswer]+"</h2>");
       getGif(activeQuestion.image);
       questionPhase = false;
       unanswered++;
@@ -178,7 +214,7 @@ function reWrite()
 
 
 
-  $("#question").text(activeQuestion.question);
+  $("#question").html("<h2>"+activeQuestion.question+"</h2>");
 
   for(var i = 0; i < answerArray.length; i++)
   {
@@ -197,7 +233,7 @@ function checkAnswer(event)
  if (event.data.param === activeQuestion.correctAnswer)
     {
       $("#questionContainer").hide();
-      $("#timerText").text("You got it right!");
+      $("#timerText").html("<h2>You got it right!</h2>");
       getGif(activeQuestion.image);
       answerCorrect+=1;
       questionPhase = false;
@@ -208,7 +244,7 @@ function checkAnswer(event)
   else
     {
       $("#questionContainer").hide();
-      $("#timerText").text("Wrong Answer! The correct answer was: "+activeQuestion.answerArray[activeQuestion.correctAnswer]);
+      $("#timerText").html("<h2>Wrong Answer! The correct answer was: "+activeQuestion.answerArray[activeQuestion.correctAnswer]+"</h2>");
       getGif(activeQuestion.image);
       answerWrong+=1;
       questionPhase = false;
@@ -230,6 +266,7 @@ function checkGame()
       clearInterval(intervalId);
       $("#questionContainer").hide();
       $("#startContainer").show();
+      $("#timerContainer").hide();
       
       
 
@@ -239,8 +276,8 @@ function checkGame()
       
       answerCorrect = 0;
       answerWrong = 0;
-      unanswered = 0; bv  
-      questionCount = -1
+      unanswered = 0;   
+      questionCount = -1;
 
       return true;
     
