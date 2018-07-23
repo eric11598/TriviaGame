@@ -1,8 +1,12 @@
 body {
     
     background-image: url("..//images/background.jpg");
-    /*background-size: 100% 100%;*/
     
+    
+}
+
+.jumbotron{
+    background-image: url("..//images/banner_background.png");
 }
 
 #containerBody {
